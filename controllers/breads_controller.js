@@ -5,7 +5,10 @@ const Bread = module.require('../models/breads.js')
 // INDEX
 breads.get('/', (req, res) => {
   console.log(Bread)
-  res.send('This is the index at /breads')
+  // res.send('This is the index at /breads')
+  res.render('index', {
+    'breads': Bread
+  });
 })
 
 // SHOW
