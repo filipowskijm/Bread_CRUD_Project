@@ -5,16 +5,14 @@ function Index ({breads, title}) {
     return (
       <Default title={title}>
         <h2>Index Page</h2>
-        <p>I have {breads[2].name} bread!</p>
+        <p>I have bread!</p>
         {/* The above code will use the breads model array to render the breads data */}
         <ul>
             {
                 breads.map((bread, index) => {
-                    console.log(bread)
-                    console.log(index)
                     return (
                         <li key={index}>
-                            <a href={`/breads/${index}`}>
+                            <a href={`/breads/${bread.id}`}>
                                 {bread.name}
                             </a>
                         </li>
