@@ -4,20 +4,15 @@ const Bread = module.require('../models/breads.js')
 const Baker = require('../models/baker.js')
 
 // Index:
-breads.get('/', (req, res) => {
-  Baker.find()
-    .then(foundBakers => {
-      Bread.find()
-      .then(foundBreads => {
-          res.render('index', {
-              breads: foundBreads,
-              bakers: foundBakers,
-              title: 'Index Page'
-          })
-      })
-    })
+breads.get('/', async (req, res) => {
+  const foundBakers = await Baker.find().lean()
+  const foundBreads = await Bread.find().limit(5).lean()
+  res.render('index', {
+    breads: foundBreads,
+    bakers: foundBakers,
+    title: 'Index Page'
+  })
 })
-
 
 // in the new route
 breads.get('/new', (req, res) => {
@@ -29,7 +24,6 @@ breads.get('/new', (req, res) => {
       })
 })
 
-// EDIT
 // EDIT
 breads.get('/:id/edit', (req, res) => {
   Baker.find()
@@ -43,7 +37,6 @@ breads.get('/:id/edit', (req, res) => {
           })
     })
 })
-
 
 // SEED
 breads.get('/data/seed', (req, res) => {
@@ -89,8 +82,6 @@ breads.get('/:id', (req, res) => {
     })
 })
 
-
-
 // CREATE
 breads.post('/', (req, res) => {
   if(!req.body.image) {
@@ -127,6 +118,5 @@ breads.put('/:id', (req, res) => {
       res.redirect(`/breads/${req.params.id}`) 
     })
 })
-
 
 module.exports = breads
